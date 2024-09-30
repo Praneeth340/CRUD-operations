@@ -12,16 +12,16 @@ mongoose.connect(uri)
 
 // Define the Movie schema
 const movieSchema = new mongoose.Schema({
-    id: { type: String, required: true },                // Assuming id is a string
+    id: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String },
     release_year: { type: Number },
-    runtime: { type: Number },                            // Add runtime
+    runtime: { type: Number },
     genres: [{ type: String }],
     imdb_score: { type: Number },
-    age_certification: { type: String },                  // Add age_certification
-    production_countries: [{ type: String }],             // Add production_countries
-    type: { type: String }                                 // Add type
+    age_certification: { type: String },
+    production_countries: [{ type: String }],
+    type: { type: String }
 });
 
 // Create a Mongoose model for the movies
@@ -50,22 +50,22 @@ const typeDefs = gql`
     type Mutation {
         addMovie(
             id: String!,
-            title: String!, 
-            description: String, 
-            release_year: Int, 
-            runtime: Int, 
-            genres: [String], 
-            imdb_score: Float, 
-            age_certification: String, 
-            production_countries: [String], 
+            title: String!,
+            description: String,
+            release_year: Int,
+            runtime: Int,
+            genres: [String],
+            imdb_score: Float,
+            age_certification: String,
+            production_countries: [String],
             type: String
         ): Movie
         updateMovie(
-            title: String!, 
-            description: String, 
-            release_year: Int, 
-            runtime: Int, 
-            genres: [String], 
+            title: String!,
+            description: String,
+            release_year: Int,
+            runtime: Int,
+            genres: [String],
             imdb_score: Float
         ): Movie
         deleteMovie(title: String!): Movie
@@ -112,20 +112,21 @@ const resolvers = {
             return updatedMovie;
         },
         deleteMovie: async (_, { title }) => {
-            const deletedMovie = await Movie.findOneAndDelete({ title: { $regex: title, $options: 'i' } }); // Case-insensitive search
+            const deletedMovie = await Movie.findOneAndDelete({ title: { $regex: title, $options: 'i' } });
             return deletedMovie;
         },
     },
 };
 
 // Create an instance of ApolloServer
-const server = new ApolloServer({ typeDefs, resolvers, playground: true }); // Enable GraphQL Playground
+const server = new ApolloServer({ typeDefs, resolvers, playground: true });
 
 // Create an instance of Express
 const app = express();
 
 // Redirect from root to GraphQL endpoint
 app.get('/', (req, res) => {
+    console.log('Root URL accessed, redirecting to /graphql');
     res.redirect('/graphql'); // Redirect from root to GraphQL endpoint
 });
 
