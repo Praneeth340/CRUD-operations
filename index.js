@@ -50,22 +50,22 @@ const typeDefs = gql`
     type Mutation {
         addMovie(
             id: String!,
-            title: String!,
-            description: String,
-            release_year: Int,
-            runtime: Int,
-            genres: [String],
-            imdb_score: Float,
-            age_certification: String,
-            production_countries: [String],
+            title: String!, 
+            description: String, 
+            release_year: Int, 
+            runtime: Int, 
+            genres: [String], 
+            imdb_score: Float, 
+            age_certification: String, 
+            production_countries: [String], 
             type: String
         ): Movie
         updateMovie(
-            title: String!,
-            description: String,
-            release_year: Int,
-            runtime: Int,
-            genres: [String],
+            title: String!, 
+            description: String, 
+            release_year: Int, 
+            runtime: Int, 
+            genres: [String], 
             imdb_score: Float
         ): Movie
         deleteMovie(title: String!): Movie
@@ -103,17 +103,14 @@ const resolvers = {
             if (genres) updateData.genres = genres;
             if (imdb_score) updateData.imdb_score = imdb_score;
 
-            const updatedMovie = await Movie.findOneAndUpdate(
+            return await Movie.findOneAndUpdate(
                 { title: { $regex: title, $options: 'i' } },
                 updateData,
                 { new: true }
             );
-
-            return updatedMovie;
         },
         deleteMovie: async (_, { title }) => {
-            const deletedMovie = await Movie.findOneAndDelete({ title: { $regex: title, $options: 'i' } });
-            return deletedMovie;
+            return await Movie.findOneAndDelete({ title: { $regex: title, $options: 'i' } });
         },
     },
 };
@@ -124,10 +121,12 @@ const server = new ApolloServer({ typeDefs, resolvers, playground: true });
 // Create an instance of Express
 const app = express();
 
+// Middleware for parsing JSON
+app.use(express.json());
+
 // Redirect from root to GraphQL endpoint
 app.get('/', (req, res) => {
-    console.log('Root URL accessed, redirecting to /graphql');
-    res.redirect('/graphql'); // Redirect from root to GraphQL endpoint
+    res.redirect('/graphql'); // Redirect to GraphQL endpoint
 });
 
 // Start the server
@@ -135,9 +134,10 @@ const startServer = async () => {
     await server.start();
     server.applyMiddleware({ app });
 
-    app.listen({ port: 4000 }, () =>
-        console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
-    );
+    app.listen({ port: 4000 }, () => {
+        console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+        console.log(`GraphQL Playground at: http://localhost:4000${server.graphqlPath}`);
+    });
 };
 
 // Run the server
