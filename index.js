@@ -119,14 +119,14 @@ const resolvers = {
 };
 
 // Create an instance of ApolloServer
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ typeDefs, resolvers, playground: true }); // Enable GraphQL Playground
 
 // Create an instance of Express
 const app = express();
 
-// Add a route for the root URL that redirects to /graphql
+// Redirect from root to GraphQL endpoint
 app.get('/', (req, res) => {
-    res.redirect('/graphql');
+    res.redirect('/graphql'); // Redirect from root to GraphQL endpoint
 });
 
 // Start the server
