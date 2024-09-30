@@ -1,0 +1,10 @@
+query {
+  movies {
+    id
+    title
+    description
+    release_year
+    genres
+    imdb_score
+  }
+}

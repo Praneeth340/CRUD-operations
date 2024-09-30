@@ -1,0 +1,14 @@
+mutation {
+  updateMovie(
+    title: "Inception",
+    description: "An updated description",
+    runtime: 150,
+    genres: ["Action", "Sci-Fi", "Thriller"],
+    imdb_score: 9.0
+  ) {
+    id
+    title
+    description
+    runtime
+  }
+}

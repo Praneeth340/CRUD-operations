@@ -1,0 +1,82 @@
+CREATE A MOVIE 
+
+mutation {
+  addMovie(
+    id: "1",
+    title: "Inception",
+    description: "A mind-bending thriller",
+    release_year: 2010,
+    runtime: 148,
+    genres: ["Action", "Sci-Fi"],
+    imdb_score: 8.8,
+    age_certification: "PG-13",
+    production_countries: ["USA", "UK"],
+    type: "Movie"
+  ) {
+    id
+    title
+    description
+  }
+}
+
+
+
+
+UPDATE A MOVIE 
+
+mutation {
+  updateMovie(title: "Inception", description: "A mind-bending thriller", release_year: 2010, genres: ["Sci-Fi", "Action"], imdb_score: 8.8) {
+    id
+    title
+    description
+    release_year
+    genres
+    imdb_score
+  }
+}
+
+
+DELETE A MOVIE 
+
+mutation {
+  deleteMovie(title: "Inception") {
+    id
+    title
+    description
+    release_year
+    genres
+    imdb_score
+  }
+}
+
+
+
+READ ALL MOVIES 
+
+query {
+  movies {
+    id
+    title
+    description
+    release_year
+    genres
+    imdb_score
+  }
+}
+
+
+
+READ MOVIE BY TITLE
+
+
+
+query {
+  movieByTitle(title: "Inception") {
+    id
+    title
+    description
+    release_year
+    genres
+    imdb_score
+  }
+}

@@ -1,0 +1,10 @@
+mutation {
+  deleteMovie(title: "Inception") {
+    id
+    title
+    description
+    release_year
+    genres
+    imdb_score
+  }
+}
