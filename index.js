@@ -124,9 +124,9 @@ const server = new ApolloServer({ typeDefs, resolvers });
 // Create an instance of Express
 const app = express();
 
-// Add a route for the root URL
+// Add a route for the root URL that redirects to /graphql
 app.get('/', (req, res) => {
-    res.send('Welcome to the GraphQL API! Visit /graphql to access the API.');
+    res.redirect('/graphql');
 });
 
 // Start the server
